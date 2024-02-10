@@ -8,7 +8,7 @@ const SelectField = ({
   options,
   modifyClasses = "",
 }) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState("1");
 
   const handleSelect = e => {
     setValue(parseInt(e.target.value));
@@ -24,7 +24,7 @@ const SelectField = ({
         onChange={handleSelect}
         value={value}
         name={name}
-        className="border-b border-gray-500 py-2 px-4">
+        className="border-b border-gray-500 py-2 px-2">
         {options?.map(option => {
           return (
             <option key={option.id} value={option.value}>
