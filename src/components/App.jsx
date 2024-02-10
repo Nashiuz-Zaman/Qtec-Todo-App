@@ -19,7 +19,7 @@ const App = () => {
     <div
       className={`text-textPrimary font-default min-h-screen flex flex-col max-w-[120rem] mx-auto overflow-x-hidden ${
         theme === "light" ? "bg-white" : "bg-darkThemeBg"
-      }`}>
+      } transition-all duration-default`}>
       {/* react toastify */}
       <ToastContainer
         position="top-center"
