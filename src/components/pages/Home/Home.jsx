@@ -1,5 +1,29 @@
+// component
+import SectionHeading from "../../shared/SectionHeading/SectionHeading";
+import InnerContainer from "./../../containers/InnerContainer/InnerContainer";
+
+// redux
+import { useSelector } from "react-redux";
+import TasksContainer from "./TasksContainer/TasksContainer";
+
 const Home = () => {
-  return <div></div>;
+  const { theme } = useSelector(store => store.websiteTheme);
+  return (
+    <div className="py-customMd">
+      <InnerContainer>
+        <section>
+          <SectionHeading
+            theme={theme}
+            text="Your Tasks"
+            modifyClasses="mb-customSm"
+          />
+
+          {/* tasks */}
+          <TasksContainer />
+        </section>
+      </InnerContainer>
+    </div>
+  );
 };
 
 export default Home;

@@ -6,7 +6,7 @@ import ReactDOM from "react-dom/client";
 import App from "./components/App";
 
 // redux
-import { store } from "./redux/app/store";
+import { store } from "./app/store";
 import { Provider } from "react-redux";
 
 // style import

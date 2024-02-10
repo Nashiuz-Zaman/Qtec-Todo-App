@@ -7,7 +7,7 @@ import { MdOutlineLightMode } from "react-icons/md";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
-import { setTheme } from "./../../../redux/features/websiteTheme/websiteThemeSlice";
+import { setTheme } from "./../../../features/websiteTheme/websiteThemeSlice";
 
 const ThemeBtn = ({ modifyClasses = "", disabled = false }) => {
   const dispatch = useDispatch();
