@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // components
 import BrandLogo from "./../BrandLogo/BrandLogo";
 import InnerContainer from "../../containers/InnerContainer/InnerContainer";
-import ButtonBtn from "./../ButtonBtn/ButtonBtn";
+import ThemeBtn from "./../ThemeBtn/ThemeBtn";
 
 // redux
 import { useSelector } from "react-redux";
@@ -17,7 +17,8 @@ const Header = ({ modifyClasses = "" }) => {
   const { theme } = useSelector(store => store.websiteTheme);
 
   return (
-    <header className={`py-custom2xsm bg-black ${modifyClasses}`}>
+    <header
+      className={`py-custom2xsm border-b border-lightBorder ${modifyClasses}`}>
       <InnerContainer>
         <div className="flex items-center justify-between">
           {/* website logo */}
@@ -26,7 +27,7 @@ const Header = ({ modifyClasses = "" }) => {
             imageModifyClasses="xl:h-[4rem] 2xl:h-[5rem]"
           />
 
-          <ButtonBtn />
+          <ThemeBtn />
         </div>
       </InnerContainer>
     </header>
