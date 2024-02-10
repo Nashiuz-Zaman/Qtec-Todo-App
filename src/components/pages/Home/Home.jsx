@@ -24,7 +24,7 @@ const Home = () => {
         </section>
 
         <section>
-          <CreateForm />
+          <CreateForm theme={theme} />
         </section>
       </InnerContainer>
     </div>

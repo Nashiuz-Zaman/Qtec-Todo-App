@@ -3,6 +3,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 
 const TextareaField = ({
+  theme = "light",
   label = "Default Label",
   name,
   modifyClasses = "",
@@ -15,15 +16,21 @@ const TextareaField = ({
       {/* label */}
       <label
         className={`block mb-1 transition-all duration-default ${
-          focused ? "text-textPrimary font-semibold" : "text-gray-400"
+          focused
+            ? `font-medium ${
+                theme === "light" ? "text-textPrimary" : "text-white"
+              }`
+            : "text-gray-400"
         }`}>
         {label}
       </label>
 
       {/* input area */}
       <textarea
+        className={`block h-10 w-full border-b border-gray-500 bg-transparent py-1 pr-4 focus:outline-none ${
+          theme === "light" ? "text-textPrimary" : "text-white"
+        }`}
         onChange={e => setValue(e.target.value)}
-        className="block h-10 w-full border-b border-gray-500 py-1 pr-4 focus:outline-none"
         onFocus={() => setFocused(true)}
         onBlur={() => {
           setFocused(value.length ? true : false);
@@ -35,6 +42,7 @@ const TextareaField = ({
 };
 
 TextareaField.propTypes = {
+  theme: PropTypes.string,
   label: PropTypes.string,
   name: PropTypes.string,
   modifyClasses: PropTypes.string,

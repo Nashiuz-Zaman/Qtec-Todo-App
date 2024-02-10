@@ -32,39 +32,56 @@ const priorityOptions = [
   },
 ];
 
-const CreateForm = ({ modifyClasses = "" }) => {
+const CreateForm = ({ theme = "light", modifyClasses = "" }) => {
   const { createFormOpen } = useSelector(store => store.forms);
   const { closeCreateForm } = useForms();
 
   return (
     <form
-      className={`p-customXsm fixed w-[85%] xsm:w-[25rem] md:w-[30rem] lg:w-[35rem] bg-white shadow-large z-30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-defaultLg transition-all duration-default ${
+      className={`p-customXsm fixed w-[85%] xsm:w-[25rem] md:w-[30rem] lg:w-[35rem] shadow-large z-30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-defaultLg transition-all duration-default ${
         createFormOpen ? "opacity-100 visible" : "opacity-0 collapse"
-      } ${modifyClasses}`}>
+      } ${theme === "light" ? "bg-white" : "bg-darkThemeBg"} ${modifyClasses}`}>
       {/* close btn */}
       <CloseBtn
         clickHandler={closeCreateForm}
+        theme={theme}
         modifyClasses="my-0 mb-2 text-2xl"
       />
 
       {/* form heading */}
-      <h2 className="font-bold text-2xl mb-5 sm:mb-custom2xsm">Add a Todo</h2>
+      <h2
+        className={`font-bold text-2xl mb-5 sm:mb-custom2xsm transition-all duration-default ${
+          theme === "light" ? "text-textPrimary" : "text-white"
+        }`}>
+        Add a Todo
+      </h2>
 
-      <div className="space-y-6 mb-8 sm:mb-customXsm">
-        <InputField placeholder="Title" name="title" />
+      <div className="space-y-6 xl:space-y-8 mb-8 sm:mb-customXsm">
+        {/* title */}
+        <InputField theme={theme} placeholder="Title" name="title" />
+
         {/* description */}
-        <TextareaField label="Description" name="description" />
+        <TextareaField theme={theme} label="Description" name="description" />
 
-        <InputField placeholder="Deadline (DD-MM-YY)" name="deadline" />
-        <SelectField label="Priority" options={priorityOptions} />
+        {/* deadline */}
+        <InputField
+          theme={theme}
+          placeholder="Deadline (DD-MM-YY)"
+          name="deadline"
+        />
+
+        {/* priority */}
+        <SelectField theme={theme} label="Priority" options={priorityOptions} />
       </div>
 
+      {/* submit button */}
       <ButtonBtn text="Add Todo" modifyClasses="!w-full" />
     </form>
   );
 };
 
 CreateForm.propTypes = {
+  theme: PropTypes.string,
   modifyClasses: PropTypes.string,
 };
 

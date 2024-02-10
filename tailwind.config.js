@@ -24,7 +24,7 @@ export default {
         small: "0 3px 20px -3px rgba(0,0,0,0.2)",
       },
       transitionDuration: {
-        default: "150ms",
+        default: "170ms",
       },
       colors: {
         primary: "#31C48D",

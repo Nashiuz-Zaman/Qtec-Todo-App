@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 
 const InputField = ({
+  theme = "light",
   type = "text",
   placeholder = "Default placeholder",
   name = "",
@@ -18,7 +19,9 @@ const InputField = ({
       <p
         className={`absolute transition-all duration-[inherit] ${
           focused
-            ? "text-xs -translate-y-1 text-textPrimary font-semibold"
+            ? `-translate-y-1 ${
+                theme === "light" ? "text-textPrimary" : "text-white"
+              } font-medium`
             : "text-gray-400 translate-y-3"
         }`}>
         {placeholder}
@@ -30,7 +33,9 @@ const InputField = ({
         onBlur={() => {
           setFocused(value.length ? true : false);
         }}
-        className={`block w-full text-sm bg-transparent pt-4 pb-2 pr-4 text-textMediumLight focus:outline-none relative z-20`}
+        className={`block w-full text-sm bg-transparent pt-4 pb-2 pr-4 ${
+          theme === "light" ? "text-textMediumLight" : "text-white"
+        } focus:outline-none relative z-20`}
         type={type}
         name={name}
         onChange={e => setValue(e.target.value)}
@@ -41,6 +46,7 @@ const InputField = ({
 };
 
 InputField.propTypes = {
+  theme: PropTypes.string,
   type: PropTypes.string,
   placeholder: PropTypes.string,
   name: PropTypes.string,
