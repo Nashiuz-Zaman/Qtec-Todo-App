@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 
 const SelectField = ({
+  theme = "light",
   label = "Default Label",
   name = "",
   options,
@@ -19,7 +20,15 @@ const SelectField = ({
   return (
     <div
       className={`grid grid-cols-[max-content_1fr] gap-5 items-center ${modifyClasses}`}>
-      <label className="block text-textPrimary font-semibold">{label}:</label>
+      {/* label */}
+      <label
+        className={`block ${
+          theme === "light" ? "text-textPrimary" : "text-white"
+        } font-semibold`}>
+        {label}:
+      </label>
+
+      {/* select options */}
       <select
         onChange={handleSelect}
         value={value}
@@ -38,6 +47,7 @@ const SelectField = ({
 };
 
 SelectField.propTypes = {
+  theme: PropTypes.string,
   label: PropTypes.string,
   name: PropTypes.string,
   options: PropTypes.array,
