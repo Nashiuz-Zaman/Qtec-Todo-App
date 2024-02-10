@@ -4,7 +4,7 @@ export const initialTasks = [
     title: "Complete Project Proposal",
     description: "Prepare and submit the project proposal by end of the week.",
     deadline: "2024-02-15T18:00:00",
-    priority: 3,
+    priorityLevel: 3,
     completed: false,
   },
   {
@@ -13,7 +13,7 @@ export const initialTasks = [
     description:
       "Review and provide feedback on recent code changes in the repository.",
     deadline: "2024-02-20T12:00:00",
-    priority: 2,
+    priorityLevel: 2,
     completed: true,
   },
   {
@@ -22,7 +22,7 @@ export const initialTasks = [
     description:
       "Conduct a team meeting to discuss project progress and upcoming tasks.",
     deadline: "2024-02-18T15:30:00",
-    priority: 3,
+    priorityLevel: 3,
     completed: false,
   },
   {
@@ -30,7 +30,7 @@ export const initialTasks = [
     title: "Bug Fixing",
     description: "Address and fix reported bugs in the application.",
     deadline: "2024-02-25T10:00:00",
-    priority: 2,
+    priorityLevel: 3,
     completed: false,
   },
   {
@@ -39,7 +39,7 @@ export const initialTasks = [
     description:
       "Update project documentation to reflect recent changes and improvements.",
     deadline: "2024-02-28T14:00:00",
-    priority: 1,
+    priorityLevel: 1,
     completed: true,
   },
   {
@@ -48,7 +48,7 @@ export const initialTasks = [
     description:
       "Explore and research new technologies for potential integration into the project.",
     deadline: "2024-03-05T16:30:00",
-    priority: 3,
+    priorityLevel: 3,
     completed: false,
   },
 ];

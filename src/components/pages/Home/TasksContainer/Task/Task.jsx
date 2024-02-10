@@ -3,80 +3,148 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 
 // react icons
-import { IoTrashSharp, IoChevronDownOutline } from "react-icons/io5";
+import {
+  IoTrashSharp,
+  IoChevronDownOutline,
+  IoCheckmarkSharp,
+} from "react-icons/io5";
+import { MdEdit } from "react-icons/md";
+import { FaExclamation } from "react-icons/fa";
 
 // component
 import Accordion from "./Accordion/Accordion";
 
 // hook
-// import useTasks from "../../../../hooks/useTasks";
-
-// // utils
-// import { useTaskDragDropProvider } from "../../../../utlis/TaskDragDropUtils";
+import useGetTimeData from "./../../../../../hooks/useGetTimeData";
 
 const Task = ({ theme = "light", taskData }) => {
-  // const [isDragging, setIsDragging] = useState(false);
+  const { getSpecificDate } = useGetTimeData();
+
+  //  accordion state
   const [expanded, setExpanded] = useState(false);
-  const { id, title, description, deadline, priority } = taskData;
 
-  // const { deleteTask, updateTasks } = useTasks();
+  // extract task data
+  const { id, title, description, deadline, completed, priorityLevel } =
+    taskData;
 
-  // const { findDropContainerId, dropContainersRef } = useTaskDragDropProvider();
+  // get the date details
+  const { dayOfTheMonth, year, monthName } = getSpecificDate(
+    new Date(deadline)
+  );
 
-  const priorityColor =
-    priority === "high"
-      ? "bg-red-500"
-      : priority === "moderate"
-      ? "bg-orange-500"
-      : "bg-green-500";
+  // priority data info
+  const priorities = [
+    {
+      text: "Low",
+      color: "bg-green-500",
+    },
+    {
+      text: "Medium",
+      color: "bg-orange-500",
+    },
+    {
+      text: "High",
+      color: "bg-red-500",
+    },
+  ];
+
+  // create the deadline date string
+  const deadlineStr = `${dayOfTheMonth}-${monthName}-${year}`;
+
+  // set priority color and text
+  const priorityColor = priorities[priorityLevel - 1]?.color;
+  const priorityText = priorities[priorityLevel - 1]?.text;
+
+  // css classes
+  const titleClasses = `font-semibold text-base 2xl:text-xl 2xl:font-bold transition-all duration-default ${
+    theme === "dark" ? "text-white" : ""
+  }`;
+
+  const infoHeadingClasses = `font-semibold text-sm 2xl:text-lg 2xl:font-bold transition-all duration-default ${
+    theme === "dark" ? "text-white" : ""
+  }`;
+
+  const infoTextClasses = `font-medium text-sm 2xl:text-lg transition-all duration-default ${
+    theme === "dark" ? "text-white" : ""
+  }`;
+
+  const iconBtnClasses =
+    "aspect-square rounded-full flex items-center justify-center";
+
+  const iconClasses = "m-2 text-white text-base";
+
+  const priorityClasses = `w-max mx-auto sm:mx-0 py-1 px-4 mt-3 text-xs md:py-[6px] md:text-sm text-white rounded-full ${priorityColor}`;
 
   return (
     <div
-      draggable={true}
-      // onTouchStart={() => {
-      //   setIsDragging(true);
-      //   // make the website body temporarily unscrollable
-      //   document.body.style.overflowY = "hidden";
-      // }}
-      // onTouchEnd={e => {
-      //   const status = findDropContainerId(e, dropContainersRef, "touch");
-      //   // make the website body scrollable again
-      //   document.body.style.overflowY = "auto";
-      //   if (status) {
-      //     updateTasks(_id, status, tasks);
-      //   }
-      //   setIsDragging(false);
-      // }}
-      // onDragStart={() => {
-      //   setIsDragging(true);
-      // }}
-      // onDragEnd={e => {
-      //   const status = findDropContainerId(e, dropContainersRef, "mouse");
-      //   if (status) {
-      //     updateTasks(_id, status, tasks);
-      //   }
-      //   setIsDragging(false);
-      // }}
-      className={`border border-lightBorder bg-white rounded-xl shadow-small px-4 text-[0.8rem] flex flex-col cursor-grab`}>
-      {/* title and delete button */}
-      <div className="flex items-center justify-between mb-1 mt-4">
-        <p className="font-semibold text-sm">{title}</p>
+      className={`border rounded-xl shadow-small py-5 px-6 flex flex-col ${
+        theme === "light"
+          ? "bg-white border-lightBorder"
+          : "bg-[#ffffff00] border-white"
+      }`}>
+      {/* task title, priority and btns */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 mb-6 sm:mb-4">
+        <div className="mb-5 sm:mb-0 text-center sm:text-left">
+          {/* task title */}
+          <h3 className={titleClasses}>{title}</h3>
 
-        {/* delete button */}
-        <button
-          title="Delete Task"
-          // onClick={() => deleteTask(_id, tasks)}
-          // onTouchStart={() => deleteTask(_id, tasks)}
-          aria-label="Delete task"
-          className="flex justify-center items-center px-[5px] py-[4px] group hover:bg-lightGray transition-all duration-default rounded-md">
-          <IoTrashSharp className="text-red-600 text-base" />
-        </button>
-      </div>
-      {/* priority high/moderate/low */}
-      <div
-        className={`capitalize w-max py-[1px] px-3 text-white rounded-full text-[0.7rem] ${priorityColor}`}
-        title={`${priority} priority task`}>
-        {priority}
+          {/* priority high/medium/low */}
+          <div
+            className={priorityClasses}
+            title={`${priorityText} priority task`}>
+            {priorityText}
+          </div>
+        </div>
+
+        <div className="justify-self-center sm:justify-self-end flex flex-col space-y-2 sm:space-y-3">
+          <p>
+            <span className={infoHeadingClasses}>Status: </span>
+            <span className={infoTextClasses}>
+              {completed ? "Completed" : "Incomplete"}
+            </span>
+          </p>
+
+          {/* buttons */}
+          <div className="flex items-center gap-3 lg:gap-2 sm:ml-auto">
+            {completed ? (
+              <>
+                {/* not completed button */}
+                <button
+                  title="Mark as Incomplete"
+                  aria-label="Button for marking task as incompleted"
+                  className={`bg-yellow-400 ${iconBtnClasses}`}>
+                  <FaExclamation className={iconClasses} />
+                </button>
+              </>
+            ) : (
+              <>
+                {/* complete button */}
+                <button
+                  title="Mark as Completed"
+                  aria-label="Button for marking task as completed"
+                  className={`bg-green-600 ${iconBtnClasses}`}>
+                  <IoCheckmarkSharp className={iconClasses} />
+                </button>
+              </>
+            )}
+
+            {/* edit button */}
+            <button
+              title="Edit Task"
+              aria-label="Button for editing task"
+              className={`bg-blue-500 ${iconBtnClasses}`}>
+              <MdEdit className={iconClasses} />
+            </button>
+
+            {/* delete button */}
+            <button
+              title="Delete Task"
+              aria-label="Button for deleting task"
+              className={`bg-red-600 ${iconBtnClasses}`}>
+              <IoTrashSharp className={iconClasses} />
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* expand Button */}
@@ -84,7 +152,9 @@ const Task = ({ theme = "light", taskData }) => {
         onClick={() => {
           setExpanded(prev => !prev);
         }}
-        className="block w-full cursor-pointer pt-1 pb-2">
+        className={`block w-full cursor-pointer ${
+          theme === "light" ? "text-textPrimary" : "text-white"
+        }`}>
         <IoChevronDownOutline
           className={`text-lg w-max mx-auto transition-all duration-default ${
             expanded ? "rotate-180" : "rotate-0"
@@ -94,16 +164,15 @@ const Task = ({ theme = "light", taskData }) => {
 
       <Accordion expanded={expanded}>
         {/* description */}
-        <div className="mb-2" title={description}>
-          <span className="block font-semibold ">Description:</span>
-          <p className="font-medium">{description.substring(0, 55)}...</p>
+        <div className="my-2" title={description}>
+          <h4 className={infoHeadingClasses}>Description:</h4>
+          <p className={infoTextClasses}>{description}</p>
         </div>
 
         {/* deadline */}
-        <div className="flex items-center justify-between mt-auto mb-4">
-          <p>
-            <span className="font-semibold">Deadline:</span> {deadline}
-          </p>
+        <div className="mt-auto">
+          <h4 className={infoHeadingClasses}>Deadline:</h4>
+          <p className={infoTextClasses}>{deadlineStr}</p>
         </div>
       </Accordion>
     </div>
