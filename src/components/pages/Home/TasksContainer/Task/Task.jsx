@@ -9,6 +9,7 @@ import {
   IoCheckmarkSharp,
 } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
+import { FaExclamation } from "react-icons/fa";
 
 // component
 import Accordion from "./Accordion/Accordion";
@@ -23,7 +24,8 @@ const Task = ({ theme = "light", taskData }) => {
   const [expanded, setExpanded] = useState(false);
 
   // extract task data
-  const { id, title, description, deadline, priorityLevel } = taskData;
+  const { id, title, description, deadline, completed, priorityLevel } =
+    taskData;
 
   // get the date details
   const { dayOfTheMonth, year, monthName } = getSpecificDate(
@@ -54,15 +56,15 @@ const Task = ({ theme = "light", taskData }) => {
   const priorityText = priorities[priorityLevel - 1]?.text;
 
   // css classes
-  const titleClasses = `font-semibold text-base 2xl:text-lg transition ${
+  const titleClasses = `font-semibold text-base 2xl:text-xl 2xl:font-bold transition-all duration-default ${
     theme === "dark" ? "text-white" : ""
   }`;
 
-  const infoHeadingClasses = `font-semibold text-sm lg:text-sm 2xl:text-base ${
+  const infoHeadingClasses = `font-semibold text-sm 2xl:text-lg 2xl:font-bold transition-all duration-default ${
     theme === "dark" ? "text-white" : ""
   }`;
 
-  const infoTextClasses = `font-medium text-sm lg:text-sm 2xl:text-base ${
+  const infoTextClasses = `font-medium text-sm 2xl:text-lg transition-all duration-default ${
     theme === "dark" ? "text-white" : ""
   }`;
 
@@ -71,18 +73,18 @@ const Task = ({ theme = "light", taskData }) => {
 
   const iconClasses = "m-2 text-white text-base";
 
-  const priorityClasses = `w-max py-1 px-4 mt-3 text-white rounded-full text-xs ${priorityColor}`;
+  const priorityClasses = `w-max mx-auto sm:mx-0 py-1 px-4 mt-3 text-xs md:py-[6px] md:text-sm text-white rounded-full ${priorityColor}`;
 
   return (
     <div
-      className={`border rounded-xl shadow-small py-5 px-6 flex flex-col cursor-grab transition-all duration-default ${
+      className={`border rounded-xl shadow-small py-5 px-6 flex flex-col ${
         theme === "light"
           ? "bg-white border-lightBorder"
           : "bg-[#ffffff00] border-white"
       }`}>
       {/* task title, priority and btns */}
       <div className="grid grid-cols-1 sm:grid-cols-2 mb-6 sm:mb-4">
-        <div className="mb-5 sm:mb-0">
+        <div className="mb-5 sm:mb-0 text-center sm:text-left">
           {/* task title */}
           <h3 className={titleClasses}>{title}</h3>
 
@@ -94,31 +96,54 @@ const Task = ({ theme = "light", taskData }) => {
           </div>
         </div>
 
-        {/* buttons */}
-        <div className="flex items-center gap-3 justify-self-start sm:justify-self-end">
-          {/* complete button */}
-          <button
-            title="Mark as completed"
-            aria-label="Button for marking task as completed"
-            className={`bg-green-600 ${iconBtnClasses}`}>
-            <IoCheckmarkSharp className={iconClasses} />
-          </button>
+        <div className="justify-self-center sm:justify-self-end flex flex-col space-y-2 sm:space-y-3">
+          <p>
+            <span className={infoHeadingClasses}>Status: </span>
+            <span className={infoTextClasses}>
+              {completed ? "Completed" : "Incomplete"}
+            </span>
+          </p>
 
-          {/* edit button */}
-          <button
-            title="Edit Task"
-            aria-label="Button for editing task"
-            className={`bg-blue-500 ${iconBtnClasses}`}>
-            <MdEdit className={iconClasses} />
-          </button>
+          {/* buttons */}
+          <div className="flex items-center gap-3 lg:gap-2 sm:ml-auto">
+            {completed ? (
+              <>
+                {/* not completed button */}
+                <button
+                  title="Mark as Incomplete"
+                  aria-label="Button for marking task as incompleted"
+                  className={`bg-yellow-400 ${iconBtnClasses}`}>
+                  <FaExclamation className={iconClasses} />
+                </button>
+              </>
+            ) : (
+              <>
+                {/* complete button */}
+                <button
+                  title="Mark as Completed"
+                  aria-label="Button for marking task as completed"
+                  className={`bg-green-600 ${iconBtnClasses}`}>
+                  <IoCheckmarkSharp className={iconClasses} />
+                </button>
+              </>
+            )}
 
-          {/* delete button */}
-          <button
-            title="Delete Task"
-            aria-label="Button for deleting task"
-            className={`bg-red-600 ${iconBtnClasses}`}>
-            <IoTrashSharp className={iconClasses} />
-          </button>
+            {/* edit button */}
+            <button
+              title="Edit Task"
+              aria-label="Button for editing task"
+              className={`bg-blue-500 ${iconBtnClasses}`}>
+              <MdEdit className={iconClasses} />
+            </button>
+
+            {/* delete button */}
+            <button
+              title="Delete Task"
+              aria-label="Button for deleting task"
+              className={`bg-red-600 ${iconBtnClasses}`}>
+              <IoTrashSharp className={iconClasses} />
+            </button>
+          </div>
         </div>
       </div>
 
