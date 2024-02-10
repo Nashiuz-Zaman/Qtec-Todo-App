@@ -14,7 +14,7 @@ const TextareaField = ({
     <div className={`${modifyClasses}`}>
       {/* label */}
       <label
-        className={`block mb-1 ${
+        className={`block mb-1 transition-all duration-default ${
           focused ? "text-textPrimary font-semibold" : "text-gray-400"
         }`}>
         {label}
@@ -23,7 +23,7 @@ const TextareaField = ({
       {/* input area */}
       <textarea
         onChange={e => setValue(e.target.value)}
-        className="block w-full border-b border-gray-500 py-1 pr-4 focus:outline-none"
+        className="block h-10 w-full border-b border-gray-500 py-1 pr-4 focus:outline-none"
         onFocus={() => setFocused(true)}
         onBlur={() => {
           setFocused(value.length ? true : false);
