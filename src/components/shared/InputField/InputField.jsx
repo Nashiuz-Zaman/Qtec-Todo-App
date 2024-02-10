@@ -13,16 +13,14 @@ const InputField = ({
 
   return (
     <div
-      className={`border-b relative transition-all duration-[30ms] border-gray-400 text- ${modifyClasses}`}
-    >
-      {/* place holder */}
+      className={`border-b relative transition-all duration-[30ms] border-gray-500 text- ${modifyClasses}`}>
+      {/* placeholder */}
       <p
         className={`absolute transition-all duration-[inherit] ${
           focused
             ? "text-xs -translate-y-1 text-textPrimary font-semibold"
             : "text-gray-400 translate-y-3"
-        }`}
-      >
+        }`}>
         {placeholder}
       </p>
 
@@ -32,10 +30,10 @@ const InputField = ({
         onBlur={() => {
           setFocused(value.length ? true : false);
         }}
-        className={`block text-sm bg-transparent pt-4 pb-2 pr-4 text-textMediumLight focus:outline-none relative z-20`}
+        className={`block w-full text-sm bg-transparent pt-4 pb-2 pr-4 text-textMediumLight focus:outline-none relative z-20`}
         type={type}
         name={name}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={e => setValue(e.target.value)}
         value={value}
       />
     </div>
