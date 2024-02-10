@@ -1,10 +1,11 @@
 // component
 import SectionHeading from "../../shared/SectionHeading/SectionHeading";
 import InnerContainer from "./../../containers/InnerContainer/InnerContainer";
+import TasksContainer from "./TasksContainer/TasksContainer";
+import CreateForm from "./CreateForm/CreateForm";
 
 // redux
 import { useSelector } from "react-redux";
-import TasksContainer from "./TasksContainer/TasksContainer";
 
 const Home = () => {
   const { theme } = useSelector(store => store.websiteTheme);
@@ -20,6 +21,10 @@ const Home = () => {
 
           {/* tasks */}
           <TasksContainer />
+        </section>
+
+        <section>
+          <CreateForm />
         </section>
       </InnerContainer>
     </div>

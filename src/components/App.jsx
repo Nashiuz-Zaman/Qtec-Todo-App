@@ -7,7 +7,10 @@ import { RouterProvider } from "react-router-dom";
 // router
 import router from "./../router/router";
 
-// react toastify
+// component
+import BackdropBlur from "./shared/BackdropBlur/BackdropBlur";
+
+// react toastify component
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Slide } from "react-toastify";
@@ -56,6 +59,9 @@ const App = () => {
         pauseOnHover
         theme="light"
       />
+
+      {/* backdrop blur */}
+      <BackdropBlur openState={true} />
 
       <RouterProvider router={router}></RouterProvider>
     </div>

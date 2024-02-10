@@ -9,7 +9,6 @@ import CreateBtn from "./../../../shared/CreateBtn/CreateBtn";
 const TasksContainer = () => {
   const { tasks } = useSelector(store => store.tasks);
   const { theme } = useSelector(store => store.websiteTheme);
-  console.log(tasks);
 
   return (
     <div className="grid grid-cols-1 2md:grid-cols-[1.5fr_1fr] xl:grid-cols-2 gap-customXsm 2md:gap-0">
