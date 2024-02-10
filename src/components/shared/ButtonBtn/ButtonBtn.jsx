@@ -6,7 +6,7 @@ import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 const ButtonBtn = ({
   text,
-  onClickFunction = null,
+  clickHandler = null,
   colorTheme = "",
   modifyClasses = "",
   theme = "light",
@@ -40,7 +40,7 @@ const ButtonBtn = ({
     <button
       style={{ backfaceVisibility: "hidden" }}
       disabled={disabled}
-      onClick={onClickFunction}
+      onClick={clickHandler}
       // decide the design of button according to the props
       className={`${
         colorTheme === "outlined"
@@ -52,8 +52,7 @@ const ButtonBtn = ({
           : colorTheme === "danger"
           ? dangerClasses
           : primaryClasses
-      } ${allClasses}`}
-    >
+      } ${allClasses}`}>
       {loading && (
         <LoadingSpinner onlyLoader={true} loaderSizeClass={"3xl:text-2xl"} />
       )}
@@ -64,7 +63,7 @@ const ButtonBtn = ({
 
 ButtonBtn.propTypes = {
   text: PropTypes.string.isRequired,
-  onClickFunction: PropTypes.func,
+  clickHandler: PropTypes.func,
   colorTheme: PropTypes.string,
   modifyClasses: PropTypes.string,
   theme: PropTypes.string,

@@ -29,6 +29,9 @@ const App = () => {
   // extract theme
   const { theme } = useSelector(store => store.websiteTheme);
 
+  // backdrop open state
+  const { open } = useSelector(store => store.backdrop);
+
   // set initial tasks data at the start
   useEffect(() => {
     if (!localStorage.getItem("tasksData")) {
@@ -61,7 +64,7 @@ const App = () => {
       />
 
       {/* backdrop blur */}
-      <BackdropBlur openState={true} />
+      <BackdropBlur openState={open} />
 
       <RouterProvider router={router}></RouterProvider>
     </div>

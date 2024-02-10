@@ -8,7 +8,10 @@ const CloseBtn = ({ clickHandler, modifyClasses = "" }) => {
   return (
     <button
       className={`ml-auto w-max block mb-10 text-3xl ${modifyClasses}`}
-      onClick={clickHandler}>
+      onClick={e => {
+        e.preventDefault();
+        clickHandler();
+      }}>
       <AiOutlineClose></AiOutlineClose>
     </button>
   );

@@ -6,7 +6,7 @@ import { MdFormatListBulletedAdd } from "react-icons/md";
 
 const CreateBtn = ({
   text,
-  onClickFunction = null,
+  clickHandler = null,
   colorTheme = "",
   modifyClasses = "",
   theme = "light",
@@ -34,7 +34,7 @@ const CreateBtn = ({
 
   return (
     <button
-      onClick={onClickFunction}
+      onClick={clickHandler}
       // decide the design of button according to the props
       className={`${
         colorTheme === "outlined"
@@ -53,7 +53,7 @@ const CreateBtn = ({
 
 CreateBtn.propTypes = {
   text: PropTypes.string.isRequired,
-  onClickFunction: PropTypes.func,
+  clickHandler: PropTypes.func,
   colorTheme: PropTypes.string,
   modifyClasses: PropTypes.string,
   theme: PropTypes.string,
