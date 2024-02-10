@@ -1,14 +1,18 @@
 // component
 import NoData from "../../../shared/NoData/NoData";
 import Task from "./Task/Task";
+import CreateBtn from "./../../../shared/CreateBtn/CreateBtn";
+
+// hooks
+import useForms from "../../../../hooks/useForms";
 
 // redux
 import { useSelector } from "react-redux";
-import CreateBtn from "./../../../shared/CreateBtn/CreateBtn";
 
 const TasksContainer = () => {
   const { tasks } = useSelector(store => store.tasks);
   const { theme } = useSelector(store => store.websiteTheme);
+  const { openCreateForm } = useForms();
 
   return (
     <div className="grid grid-cols-1 2md:grid-cols-[1.5fr_1fr] xl:grid-cols-2 gap-customXsm 2md:gap-0">
@@ -24,7 +28,11 @@ const TasksContainer = () => {
       </div>
 
       <div className="2md:justify-self-end order-1 2md:order-2">
-        <CreateBtn text="Add New todo" modifyClasses="mx-auto 2md:mx-0" />
+        <CreateBtn
+          clickHandler={openCreateForm}
+          text="Add New todo"
+          modifyClasses="mx-auto 2md:mx-0"
+        />
       </div>
     </div>
   );
