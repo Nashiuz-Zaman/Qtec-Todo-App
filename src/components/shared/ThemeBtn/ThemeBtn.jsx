@@ -6,38 +6,24 @@ import { MdDarkMode } from "react-icons/md";
 import { MdOutlineLightMode } from "react-icons/md";
 
 // redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setTheme } from "./../../../redux/features/websiteTheme/websiteThemeSlice";
 
-const ButtonBtn = ({
-  onClickFunction = null,
-  colorTheme = "",
-  modifyClasses = "",
-  disabled = false,
-}) => {
+const ThemeBtn = ({ modifyClasses = "", disabled = false }) => {
+  const dispatch = useDispatch();
   const { theme } = useSelector(store => store.websiteTheme);
 
-  // common classes
-  const outlinedClasses = `bg-transparent border border-gray-300 hover:border-white text-gray-300 hover:text-white`;
+  const changeTheme = () => {
+    dispatch(setTheme(theme === "light" ? "dark" : "light"));
+  };
 
-  const oulinedPrimaryClasses = `bg-transparent border ${
-    theme === "dark"
-      ? "border-primaryDark text-primaryDark hover:text-primary hover:border-primary"
-      : "border-primary text-primary hover:text-primaryDark hover:border-primaryDark"
-  } disabled:border-primary disabled:text-primary`;
+  //  classes
+  const colorClasses =
+    theme === "light"
+      ? "bg-primary border border-primary hover:bg-primaryLight hover:border-primaryLight"
+      : "bg-none border border-white";
 
-  const primaryClasses = `border text-white ${
-    theme === "dark"
-      ? "bg-primaryDark border-primaryDark hover:bg-primary hover:border-primary"
-      : "bg-primary border-primary hover:bg-primaryDark hover:border-primaryDark"
-  } disabled:bg-primary disabled:border-primary`;
-
-  const blackClasses =
-    "bg-blackLight border border-blackLight hover:bg-textPrimary hover:border-textPrimary text-white disabled:bg-blackLight";
-
-  const dangerClasses =
-    "bg-red-700 border border-red-700 hover:bg-red-500 hover:border-red-500 text-white disabled:bg-red-700 disabled:border-red-700";
-
-  const allClasses = `flex items-center gap-2 min-w-[8rem] w-max capitalize transition-all duration-default rounded-defaultLg text-center px-6 py-2 3xl:text-xl 2xl:py-3 active:scale-[0.98] disabled:opacity-60 disabled:scale-100 disabled:cursor-not-allowed ${modifyClasses}`;
+  const allClasses = `flex items-center gap-2 min-w-[8rem] w-max capitalize transition-all duration-default rounded-full text-white text-center px-6 py-2 2xl:py-4 2xl:px-8 active:scale-[0.98] disabled:opacity-60 disabled:scale-100 disabled:cursor-not-allowed justify-center ${modifyClasses}`;
 
   const btnContent =
     theme === "light" ? (
@@ -56,29 +42,17 @@ const ButtonBtn = ({
     <button
       style={{ backfaceVisibility: "hidden" }}
       disabled={disabled}
-      onClick={onClickFunction}
+      onClick={changeTheme}
       // decide the design of button according to the props
-      className={`${
-        colorTheme === "outlined"
-          ? outlinedClasses
-          : colorTheme === "outlinedPrimary"
-          ? oulinedPrimaryClasses
-          : colorTheme === "black"
-          ? blackClasses
-          : colorTheme === "danger"
-          ? dangerClasses
-          : primaryClasses
-      } ${allClasses}`}>
+      className={`${colorClasses} ${allClasses}`}>
       {btnContent}
     </button>
   );
 };
 
-ButtonBtn.propTypes = {
-  onClickFunction: PropTypes.func,
-  colorTheme: PropTypes.string,
+ThemeBtn.propTypes = {
   modifyClasses: PropTypes.string,
   disabled: PropTypes.bool,
 };
 
-export default ButtonBtn;
+export default ThemeBtn;
