@@ -15,7 +15,7 @@ const Home = () => {
           <SectionHeading
             theme={theme}
             text="Your Tasks"
-            modifyClasses="mb-customSm"
+            modifyClasses="mb-customXsm text-center 2md:text-left 2md:mb-customSm"
           />
 
           {/* tasks */}

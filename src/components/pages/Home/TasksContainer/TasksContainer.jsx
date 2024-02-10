@@ -12,8 +12,8 @@ const TasksContainer = () => {
   console.log(tasks);
 
   return (
-    <div className="grid grid-cols-1 2md:grid-cols-[1.5fr_1fr] xl:grid-cols-2">
-      <div className="space-y-6">
+    <div className="grid grid-cols-1 2md:grid-cols-[1.5fr_1fr] xl:grid-cols-2 gap-customXsm 2md:gap-0">
+      <div className="space-y-6 order-2 2md:order-1">
         {/* if there is no data then show no data component */}
         {tasks?.length < 1 && <NoData text="No todos to show" />}
 
@@ -24,8 +24,8 @@ const TasksContainer = () => {
           })}
       </div>
 
-      <div>
-        <CreateBtn />
+      <div className="2md:justify-self-end order-1 2md:order-2">
+        <CreateBtn text="Add New todo" modifyClasses="mx-auto 2md:mx-0" />
       </div>
     </div>
   );
