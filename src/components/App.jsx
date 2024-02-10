@@ -1,3 +1,6 @@
+// react
+import { useEffect } from "react";
+
 // react router import
 import { RouterProvider } from "react-router-dom";
 
@@ -10,10 +13,29 @@ import "react-toastify/dist/ReactToastify.css";
 import { Slide } from "react-toastify";
 
 // redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setTasks } from "../features/tasks/tasksSlice";
+
+// tasks dummy data
+import { initialTasks } from "./../data/tasksData";
 
 const App = () => {
+  // extract dispatch method
+  const dispatch = useDispatch();
+
+  // extract theme
   const { theme } = useSelector(store => store.websiteTheme);
+
+  // set initial tasks data at the start
+  useEffect(() => {
+    if (!localStorage.getItem("tasksData")) {
+      dispatch(setTasks(initialTasks));
+      localStorage.setItem("tasksData", JSON.stringify(initialTasks));
+    } else {
+      const tasks = JSON.parse(localStorage.getItem("tasksData"));
+      dispatch(setTasks(tasks));
+    }
+  }, [dispatch]);
 
   return (
     <div
