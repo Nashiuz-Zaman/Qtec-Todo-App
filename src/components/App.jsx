@@ -2,7 +2,7 @@
 import { RouterProvider } from "react-router-dom";
 
 // router
-import router from "../../router/router";
+import router from "./../router/router";
 
 // react toastify
 import { ToastContainer } from "react-toastify";
