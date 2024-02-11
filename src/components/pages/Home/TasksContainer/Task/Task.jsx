@@ -17,15 +17,18 @@ import Accordion from "./Accordion/Accordion";
 // hook
 import useGetTimeData from "./../../../../../hooks/useGetTimeData";
 import useForms from "../../../../../hooks/useForms";
+import useModifyTasksData from "../../../../../hooks/useModifyTasksData";
 
 // redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setEditTaskId } from "../../../../../features/tasks/tasksSlice";
 
 const Task = ({ theme = "light", taskData }) => {
   const { getDateInDayMonthNameYearStr } = useGetTimeData();
+  const { tasks } = useSelector(store => store.tasks);
   const { openEditForm } = useForms();
   const dispatch = useDispatch();
+  const { removeTask, editTask } = useModifyTasksData();
 
   //  accordion state
   const [expanded, setExpanded] = useState(false);
@@ -135,6 +138,7 @@ const Task = ({ theme = "light", taskData }) => {
               onClick={e => {
                 e.preventDefault();
                 dispatch(setEditTaskId(id));
+                editTask(tasks, id);
                 openEditForm();
               }}
               title="Edit Task"
@@ -146,6 +150,10 @@ const Task = ({ theme = "light", taskData }) => {
             {/* delete button */}
             <button
               title="Delete Task"
+              onClick={e => {
+                e.preventDefault();
+                removeTask(tasks, id);
+              }}
               aria-label="Button for deleting task"
               className={`bg-red-600 ${iconBtnClasses}`}>
               <IoTrashSharp className={iconClasses} />
