@@ -38,7 +38,7 @@ const CreateForm = ({ theme = "light", modifyClasses = "" }) => {
 
   return (
     <form
-      className={`p-customXsm fixed w-[85%] xsm:w-[25rem] md:w-[30rem] lg:w-[35rem] shadow-large z-30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-defaultLg transition-all duration-default ${
+      className={`p-customXsm fixed w-[85%] xsm:w-[25rem] md:w-[30rem] lg:w-[35rem] shadow-large z-30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-defaultLg ${
         createFormOpen ? "opacity-100 visible" : "opacity-0 collapse"
       } ${theme === "light" ? "bg-white" : "bg-darkThemeBg"} ${modifyClasses}`}>
       {/* close btn */}
