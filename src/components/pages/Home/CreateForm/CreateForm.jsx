@@ -1,3 +1,5 @@
+// react
+import { useState } from "react";
 import PropTypes from "prop-types";
 
 // component
@@ -34,6 +36,7 @@ const priorityOptions = [
 ];
 
 const CreateForm = ({ theme = "light", modifyClasses = "" }) => {
+  const [reset, setReset] = useState(false);
   const { createFormOpen } = useSelector(store => store.forms);
   const { tasks } = useSelector(store => store.tasks);
   const { closeCreateForm } = useForms();
@@ -44,8 +47,14 @@ const CreateForm = ({ theme = "light", modifyClasses = "" }) => {
     const form = e.target;
     const newTodo = collectData(tasks, form);
     addTask(tasks, newTodo);
-    form.reset();
-    closeCreateForm();
+    setReset(true);
+
+    const timer = setTimeout(() => {
+      setReset(false);
+      clearTimeout(timer);
+    }, 1000);
+
+    // closeCreateForm();
   };
 
   return (
@@ -71,13 +80,24 @@ const CreateForm = ({ theme = "light", modifyClasses = "" }) => {
 
       <div className="space-y-6 xl:space-y-8 mb-8 sm:mb-customXsm">
         {/* title */}
-        <InputField theme={theme} placeholder="Title" name="title" />
+        <InputField
+          reset={reset}
+          theme={theme}
+          placeholder="Title"
+          name="title"
+        />
 
         {/* description */}
-        <TextareaField theme={theme} label="Description" name="description" />
+        <TextareaField
+          reset={reset}
+          theme={theme}
+          label="Description"
+          name="description"
+        />
 
         {/* deadline */}
         <InputField
+          reset={reset}
           theme={theme}
           placeholder="Deadline (DD-MMM-YYYY)"
           name="deadline"
@@ -91,6 +111,7 @@ const CreateForm = ({ theme = "light", modifyClasses = "" }) => {
           label="Priority"
           options={priorityOptions}
           defaultValueData={1}
+          reset={reset}
         />
       </div>
 

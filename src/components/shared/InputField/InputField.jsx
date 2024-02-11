@@ -10,6 +10,7 @@ const InputField = ({
   defaultValueData,
   maxLength = null,
   modifyClasses = "",
+  reset = false,
 }) => {
   const [focused, setFocused] = useState(false);
   const [value, setValue] = useState("");
@@ -21,6 +22,13 @@ const InputField = ({
       setFocused(true);
     }
   }, [defaultValueData]);
+
+  // if reset true then reset the value
+  useEffect(() => {
+    if (reset) {
+      setValue("");
+    }
+  }, [reset]);
 
   return (
     <div
@@ -64,6 +72,7 @@ InputField.propTypes = {
   placeholder: PropTypes.string,
   name: PropTypes.string,
   maxLength: PropTypes.number,
+  reset: PropTypes.bool,
   modifyClasses: PropTypes.string,
 };
 

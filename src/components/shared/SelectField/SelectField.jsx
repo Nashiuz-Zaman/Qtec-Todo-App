@@ -10,6 +10,7 @@ const SelectField = ({
   defaultValueData,
   fullborder = false,
   additionalChangeHandler,
+  reset = false,
   modifyClasses = "",
 }) => {
   const [value, setValue] = useState("");
@@ -19,6 +20,13 @@ const SelectField = ({
       setValue(defaultValueData.toString());
     }
   }, [defaultValueData]);
+
+  // if reset true then reset the value
+  useEffect(() => {
+    if (reset) {
+      setValue(defaultValueData);
+    }
+  }, [reset, defaultValueData]);
 
   const handleSelect = e => {
     setValue(parseInt(e.target.value));
@@ -69,6 +77,7 @@ SelectField.propTypes = {
   defaultValueData: PropTypes.any,
   fullborder: PropTypes.bool,
   additionalChangeHandler: PropTypes.func,
+  reset: PropTypes.bool,
   modifyClasses: PropTypes.string,
 };
 

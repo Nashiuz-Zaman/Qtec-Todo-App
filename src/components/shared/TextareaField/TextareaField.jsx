@@ -6,8 +6,9 @@ const TextareaField = ({
   theme = "light",
   label = "Default Label",
   name,
-  modifyClasses = "",
   defaultValueData,
+  reset = false,
+  modifyClasses = "",
 }) => {
   const [focused, setFocused] = useState(false);
   const [value, setValue] = useState("");
@@ -19,6 +20,13 @@ const TextareaField = ({
       setFocused(true);
     }
   }, [defaultValueData]);
+
+  // if reset true then reset the value
+  useEffect(() => {
+    if (reset) {
+      setValue("");
+    }
+  }, [reset]);
 
   return (
     <div className={`${modifyClasses}`}>
@@ -55,8 +63,9 @@ TextareaField.propTypes = {
   theme: PropTypes.string,
   label: PropTypes.string,
   name: PropTypes.string,
-  modifyClasses: PropTypes.string,
   defaultValueData: PropTypes.string,
+  reset: PropTypes.bool,
+  modifyClasses: PropTypes.string,
 };
 
 export default TextareaField;
