@@ -38,7 +38,9 @@ const SelectField = ({
         onChange={handleSelect}
         value={value}
         name={name}
-        className="border-b border-gray-500 py-2 px-2">
+        className={`border-b border-gray-500 py-2 px-2 bg-transparent ${
+          theme === "light" ? "text-textPrimary" : "text-gray-500"
+        }`}>
         {options?.map(option => {
           return (
             <option key={option.id} value={option.value}>
