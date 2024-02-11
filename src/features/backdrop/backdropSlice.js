@@ -16,6 +16,5 @@ const backdropSlice = createSlice({
 });
 
 const { actions, reducer } = backdropSlice;
-
-export default reducer;
 export const { setOpen } = actions;
+export default reducer;

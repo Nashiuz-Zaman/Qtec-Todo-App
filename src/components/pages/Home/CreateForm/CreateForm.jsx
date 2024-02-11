@@ -54,7 +54,7 @@ const CreateForm = ({ theme = "light", modifyClasses = "" }) => {
       clearTimeout(timer);
     }, 1000);
 
-    // closeCreateForm();
+    closeCreateForm();
   };
 
   return (

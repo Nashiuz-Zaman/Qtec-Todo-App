@@ -111,7 +111,7 @@ const Task = ({ theme = "light", taskData }) => {
           </p>
 
           {/* buttons */}
-          <div className="flex items-center gap-3 lg:gap-2 sm:ml-auto">
+          <div className="flex items-center gap-3 lg:gap-2 mx-auto sm:ml-auto sm:mr-0">
             {completed ? (
               <>
                 {/* not completed button */}
