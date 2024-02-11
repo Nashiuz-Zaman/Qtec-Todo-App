@@ -59,7 +59,27 @@ const useModifyTasksData = () => {
     [dispatch, modifyLocalStorage]
   );
 
-  return { addTask, removeTask, collectData, editTask };
+  const markTask = useCallback(
+    (curTasks, taskId, completedStatus) => {
+      const indexOfTaskToMark = [...curTasks].findIndex(
+        task => parseInt(task.id) === parseInt(taskId)
+      );
+
+      const taskToMark = curTasks[indexOfTaskToMark];
+      // extract the obj into another obj
+      const editedTask = { ...taskToMark };
+      editedTask.completed = completedStatus ? true : false;
+      console.log(editedTask, indexOfTaskToMark, curTasks);
+
+      const tempTasks = [...curTasks];
+      tempTasks.splice(indexOfTaskToMark, 1, editedTask);
+      dispatch(setTasks(tempTasks));
+      modifyLocalStorage(tempTasks);
+    },
+    [dispatch, modifyLocalStorage]
+  );
+
+  return { addTask, removeTask, collectData, editTask, markTask };
 };
 
 export default useModifyTasksData;
