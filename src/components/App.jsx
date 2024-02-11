@@ -17,7 +17,8 @@ import { Slide } from "react-toastify";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
-import { setTasks } from "../features/tasks/tasksSlice";
+import { setTasks, setFilter } from "../features/tasks/tasksSlice";
+import { setTheme } from "../features/websiteTheme/websiteThemeSlice";
 
 // tasks dummy data
 import { initialTasks } from "./../data/tasksData";
@@ -39,8 +40,28 @@ const App = () => {
       localStorage.setItem("tasksData", JSON.stringify(initialTasks));
     } else {
       const tasks = JSON.parse(localStorage.getItem("tasksData"));
-      localStorage.setItem("dev", "nashi uz zaman");
       dispatch(setTasks(tasks));
+    }
+  }, [dispatch]);
+
+  // set initial filter at the start
+  useEffect(() => {
+    if (!localStorage.getItem("filter")) {
+      localStorage.setItem("filter", 0);
+    } else {
+      const filter = parseInt(localStorage.getItem("filter"));
+      localStorage.setItem("dev", "nashi uz zaman");
+      dispatch(setFilter(filter));
+    }
+  }, [dispatch]);
+
+  // set initial theme at the start
+  useEffect(() => {
+    if (!localStorage.getItem("websiteTheme")) {
+      localStorage.setItem("websiteTheme", "light");
+    } else {
+      const theme = localStorage.getItem("websiteTheme");
+      dispatch(setTheme(theme));
     }
   }, [dispatch]);
 

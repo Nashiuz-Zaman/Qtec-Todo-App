@@ -15,6 +15,8 @@ const ThemeBtn = ({ modifyClasses = "", disabled = false }) => {
 
   const changeTheme = () => {
     dispatch(setTheme(theme === "light" ? "dark" : "light"));
+    localStorage.removeItem("websiteTheme");
+    localStorage.setItem("websiteTheme", theme === "light" ? "dark" : "light");
   };
 
   //  classes

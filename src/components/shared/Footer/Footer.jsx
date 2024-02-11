@@ -18,7 +18,7 @@ const Footer = () => {
   return (
     <footer
       className={`${
-        theme === "light" ? "bg-blackLight" : "bg-primary"
+        theme === "light" ? "bg-blackLight" : "bg-neutral-700"
       } mt-auto py-8`}>
       <InnerContainer>
         <div className="flex flex-col md:flex-row gap-8 md:gap-0 items-center justify-between">
