@@ -60,7 +60,7 @@ const EditForm = ({ theme = "light", modifyClasses = "" }) => {
   return (
     <form
       className={`p-customXsm fixed w-[85%] xsm:w-[25rem] md:w-[30rem] lg:w-[35rem] shadow-large z-30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-defaultLg ${
-        editFormOpen ? "opacity-100 visible" : "opacity-0 collapse"
+        editFormOpen ? "block" : "hidden"
       } ${theme === "light" ? "bg-white" : "bg-darkThemeBg"} ${modifyClasses}`}>
       {/* close btn */}
       <CloseBtn

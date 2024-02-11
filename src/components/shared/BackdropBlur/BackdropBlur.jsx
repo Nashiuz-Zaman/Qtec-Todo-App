@@ -9,7 +9,7 @@ const BackdropBlur = ({
     <div
       onClick={clickHandler}
       className={`fixed w-screen top-0 left-0 h-screen z-20 bg-[rgba(0,0,0,0.3)] backdrop-blur-sm ${
-        openState ? "opacity-100 visible" : "opacity-0 collapse"
+        openState ? "block" : "hidden"
       } ${modifyClasses}`}></div>
   );
 };

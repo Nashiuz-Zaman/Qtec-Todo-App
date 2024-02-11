@@ -9,6 +9,7 @@ import CloseBtn from "../../../shared/CloseBtn/CloseBtn";
 
 // hooks
 import useForms from "../../../../hooks/useForms";
+import useModifyTasksData from "../../../../hooks/useModifyTasksData";
 
 // redux
 import { useSelector } from "react-redux";
@@ -35,11 +36,22 @@ const priorityOptions = [
 const CreateForm = ({ theme = "light", modifyClasses = "" }) => {
   const { createFormOpen } = useSelector(store => store.forms);
   const { closeCreateForm } = useForms();
+  const { addTask } = useModifyTasksData();
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const form = e.target;
+
+    const newTask = {
+      id: new Date().toISOString(),
+      title: form.title.value,
+    };
+  };
 
   return (
     <form
       className={`p-customXsm fixed w-[85%] xsm:w-[25rem] md:w-[30rem] lg:w-[35rem] shadow-large z-30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-defaultLg ${
-        createFormOpen ? "opacity-100 visible" : "opacity-0 collapse"
+        createFormOpen ? "block" : "hidden"
       } ${theme === "light" ? "bg-white" : "bg-darkThemeBg"} ${modifyClasses}`}>
       {/* close btn */}
       <CloseBtn
