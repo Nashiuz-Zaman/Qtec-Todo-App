@@ -7,6 +7,30 @@ import CreateForm from "./CreateForm/CreateForm";
 // redux
 import { useSelector } from "react-redux";
 import EditForm from "./EditForm/EditForm";
+import SelectField from "../../shared/SelectField/SelectField";
+
+const filterOptions = [
+  {
+    id: 0,
+    text: "All",
+    value: 0,
+  },
+  {
+    id: 1,
+    text: "Low",
+    value: 1,
+  },
+  {
+    id: 2,
+    text: "Medium",
+    value: 2,
+  },
+  {
+    id: 3,
+    text: "High",
+    value: 3,
+  },
+];
 
 const Home = () => {
   const { theme } = useSelector(store => store.websiteTheme);
@@ -14,16 +38,26 @@ const Home = () => {
     <div className="py-customMd">
       <InnerContainer>
         <section>
-          <SectionHeading
-            theme={theme}
-            text="Your Tasks"
-            modifyClasses="mb-customXsm text-center 2md:text-left 2md:mb-customSm"
-          />
+          {/* heading and filter */}
+          <div className="mb-customXsm 2md:mb-customSm flex flex-col items-center gap-6 sm:flex-row sm:justify-between sm:gap-0 2md:w-[60%] xl:w-1/2">
+            <SectionHeading
+              theme={theme}
+              text="Your Tasks"
+              modifyClasses="!text-xl"
+            />
+
+            <SelectField
+              label="Show Tasks"
+              options={filterOptions}
+              fullborder={true}
+            />
+          </div>
 
           {/* tasks */}
           <TasksContainer />
         </section>
 
+        {/* forms */}
         <section>
           <CreateForm theme={theme} />
           <EditForm theme={theme} />

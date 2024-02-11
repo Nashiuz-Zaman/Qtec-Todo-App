@@ -8,6 +8,7 @@ const SelectField = ({
   name = "",
   options,
   defaultValueData,
+  fullborder = false,
   modifyClasses = "",
 }) => {
   const [value, setValue] = useState("1");
@@ -39,7 +40,9 @@ const SelectField = ({
         onChange={handleSelect}
         value={value}
         name={name}
-        className={`border-b border-gray-500 py-2 px-2 bg-transparent ${
+        className={`${
+          fullborder ? "border rounded-default" : "border-b"
+        } border-gray-500 py-2 px-2 bg-transparent ${
           theme === "light" ? "text-textPrimary" : "text-gray-500"
         }`}>
         {options?.map(option => {
@@ -60,6 +63,7 @@ SelectField.propTypes = {
   name: PropTypes.string,
   options: PropTypes.array,
   defaultValueData: PropTypes.any,
+  fullborder: PropTypes.bool,
   modifyClasses: PropTypes.string,
 };
 
