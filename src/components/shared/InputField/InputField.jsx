@@ -8,6 +8,7 @@ const InputField = ({
   placeholder = "Default placeholder",
   name = "",
   defaultValueData,
+  maxLength = null,
   modifyClasses = "",
 }) => {
   const [focused, setFocused] = useState(false);
@@ -38,6 +39,8 @@ const InputField = ({
 
       {/* input field */}
       <input
+        required
+        maxLength={maxLength}
         onFocus={() => setFocused(true)}
         onBlur={() => {
           setFocused(value.length ? true : false);
@@ -60,6 +63,7 @@ InputField.propTypes = {
   type: PropTypes.string,
   placeholder: PropTypes.string,
   name: PropTypes.string,
+  maxLength: PropTypes.number,
   modifyClasses: PropTypes.string,
 };
 

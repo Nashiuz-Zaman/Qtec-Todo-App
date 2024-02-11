@@ -36,6 +36,7 @@ const TextareaField = ({
 
       {/* input area */}
       <textarea
+        required
         className={`block h-10 w-full border-b border-gray-500 bg-transparent py-1 pr-4 focus:outline-none ${
           theme === "light" ? "text-textPrimary" : "text-white"
         }`}

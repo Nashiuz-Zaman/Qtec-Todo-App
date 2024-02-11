@@ -35,6 +35,7 @@ const SelectField = ({
 
       {/* select options */}
       <select
+        required
         onChange={handleSelect}
         value={value}
         name={name}
