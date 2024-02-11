@@ -16,9 +16,16 @@ import Accordion from "./Accordion/Accordion";
 
 // hook
 import useGetTimeData from "./../../../../../hooks/useGetTimeData";
+import useForms from "../../../../../hooks/useForms";
+
+// redux
+import { useDispatch } from "react-redux";
+import { setEditTaskId } from "../../../../../features/tasks/tasksSlice";
 
 const Task = ({ theme = "light", taskData }) => {
   const { getSpecificDate } = useGetTimeData();
+  const { openEditForm } = useForms();
+  const dispatch = useDispatch();
 
   //  accordion state
   const [expanded, setExpanded] = useState(false);
@@ -130,6 +137,11 @@ const Task = ({ theme = "light", taskData }) => {
 
             {/* edit button */}
             <button
+              onClick={e => {
+                e.preventDefault();
+                dispatch(setEditTaskId(id));
+                openEditForm();
+              }}
               title="Edit Task"
               aria-label="Button for editing task"
               className={`bg-blue-500 ${iconBtnClasses}`}>
