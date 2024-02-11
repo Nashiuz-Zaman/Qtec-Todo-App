@@ -28,7 +28,7 @@ const Task = ({ theme = "light", taskData }) => {
   const { tasks } = useSelector(store => store.tasks);
   const { openEditForm } = useForms();
   const dispatch = useDispatch();
-  const { removeTask, editTask } = useModifyTasksData();
+  const { removeTask } = useModifyTasksData();
 
   //  accordion state
   const [expanded, setExpanded] = useState(false);
@@ -138,7 +138,6 @@ const Task = ({ theme = "light", taskData }) => {
               onClick={e => {
                 e.preventDefault();
                 dispatch(setEditTaskId(id));
-                editTask(tasks, id);
                 openEditForm();
               }}
               title="Edit Task"
