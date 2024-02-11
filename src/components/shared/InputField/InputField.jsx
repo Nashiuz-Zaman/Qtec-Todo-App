@@ -13,6 +13,7 @@ const InputField = ({
   const [focused, setFocused] = useState(false);
   const [value, setValue] = useState("");
 
+  // if default value present show that
   useEffect(() => {
     if (defaultValueData !== undefined && defaultValueData !== "") {
       setValue(defaultValueData);
@@ -54,7 +55,7 @@ const InputField = ({
 };
 
 InputField.propTypes = {
-  defaultValueData: PropTypes.string,
+  defaultValueData: PropTypes.any,
   theme: PropTypes.string,
   type: PropTypes.string,
   placeholder: PropTypes.string,

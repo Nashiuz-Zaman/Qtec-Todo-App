@@ -1,21 +1,26 @@
 // react
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const SelectField = ({
   theme = "light",
   label = "Default Label",
   name = "",
   options,
+  defaultValueData,
   modifyClasses = "",
 }) => {
   const [value, setValue] = useState("1");
 
+  useEffect(() => {
+    if (defaultValueData !== undefined && defaultValueData !== "") {
+      setValue(defaultValueData.toString());
+    }
+  }, [defaultValueData]);
+
   const handleSelect = e => {
     setValue(parseInt(e.target.value));
   };
-
-  console.log(value);
 
   return (
     <div
@@ -51,6 +56,7 @@ SelectField.propTypes = {
   label: PropTypes.string,
   name: PropTypes.string,
   options: PropTypes.array,
+  defaultValueData: PropTypes.any,
   modifyClasses: PropTypes.string,
 };
 

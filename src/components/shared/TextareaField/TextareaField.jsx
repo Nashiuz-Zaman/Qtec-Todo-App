@@ -1,5 +1,5 @@
 // react
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 const TextareaField = ({
@@ -7,9 +7,18 @@ const TextareaField = ({
   label = "Default Label",
   name,
   modifyClasses = "",
+  defaultValueData,
 }) => {
   const [focused, setFocused] = useState(false);
   const [value, setValue] = useState("");
+
+  // if default value present show that
+  useEffect(() => {
+    if (defaultValueData !== undefined && defaultValueData !== "") {
+      setValue(defaultValueData);
+      setFocused(true);
+    }
+  }, [defaultValueData]);
 
   return (
     <div className={`${modifyClasses}`}>
@@ -46,6 +55,7 @@ TextareaField.propTypes = {
   label: PropTypes.string,
   name: PropTypes.string,
   modifyClasses: PropTypes.string,
+  defaultValueData: PropTypes.string,
 };
 
 export default TextareaField;
