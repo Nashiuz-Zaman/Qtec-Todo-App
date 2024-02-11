@@ -17,6 +17,7 @@ import { Slide } from "react-toastify";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
+import { setIsLoading } from "../features/application/applicationSlice";
 import { setTasks, setFilter } from "../features/tasks/tasksSlice";
 import { setTheme } from "../features/websiteTheme/websiteThemeSlice";
 
@@ -26,6 +27,9 @@ import { initialTasks } from "./../data/tasksData";
 const App = () => {
   // extract dispatch method
   const dispatch = useDispatch();
+
+  // extract loading state
+  const { isLoading } = useSelector(store => store.application);
 
   // extract theme
   const { theme } = useSelector(store => store.websiteTheme);
@@ -59,38 +63,42 @@ const App = () => {
   useEffect(() => {
     if (!localStorage.getItem("websiteTheme")) {
       localStorage.setItem("websiteTheme", "light");
+      dispatch(setIsLoading(false));
     } else {
       const theme = localStorage.getItem("websiteTheme");
       dispatch(setTheme(theme));
+      dispatch(setIsLoading(false));
     }
   }, [dispatch]);
 
-  return (
-    <div
-      className={`text-textPrimary font-default min-h-screen flex flex-col max-w-[120rem] mx-auto overflow-x-hidden ${
-        theme === "light" ? "bg-white" : "bg-darkThemeBg"
-      } transition-all duration-default`}>
-      {/* react toastify */}
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        transition={Slide}
-        hideProgressBar
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+  if (!isLoading) {
+    return (
+      <div
+        className={`text-textPrimary font-default min-h-screen flex flex-col max-w-[120rem] mx-auto overflow-x-hidden ${
+          theme === "light" ? "bg-white" : "bg-darkThemeBg"
+        } transition-all duration-default`}>
+        {/* react toastify */}
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          transition={Slide}
+          hideProgressBar
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
 
-      {/* backdrop blur */}
-      <BackdropBlur openState={open} />
+        {/* backdrop blur */}
+        <BackdropBlur openState={open} />
 
-      <RouterProvider router={router}></RouterProvider>
-    </div>
-  );
+        <RouterProvider router={router}></RouterProvider>
+      </div>
+    );
+  }
 };
 
 export default App;

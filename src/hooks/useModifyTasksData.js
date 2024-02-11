@@ -5,8 +5,12 @@ import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { setTasks } from "./../features/tasks/tasksSlice.jsx";
 
+// hooks
+import useToast from "./useToast";
+
 const useModifyTasksData = () => {
   const dispatch = useDispatch();
+  const { showToast } = useToast();
 
   // function for collecting data from form
   const collectData = useCallback((curTasks, form, edit = false, taskId) => {
@@ -36,9 +40,10 @@ const useModifyTasksData = () => {
 
       // update main tasks state and save to localstorage
       dispatch(setTasks(tempTasks));
+      showToast("Task added successfully", "success");
       modifyLocalStorage(tempTasks);
     },
-    [dispatch, modifyLocalStorage]
+    [dispatch, modifyLocalStorage, showToast]
   );
 
   // remove
@@ -48,9 +53,10 @@ const useModifyTasksData = () => {
 
       // update main tasks state and save to localstorage
       dispatch(setTasks(tempTasks));
+      showToast("Task deleted", "success");
       modifyLocalStorage(tempTasks);
     },
-    [dispatch, modifyLocalStorage]
+    [dispatch, modifyLocalStorage, showToast]
   );
 
   // edit
@@ -64,12 +70,13 @@ const useModifyTasksData = () => {
       // replace prev data with new data
       const tempTasks = [...curTasks];
       tempTasks.splice(indexOfTaskToEdit, 1, editedTask);
+      showToast("Task edited", "success");
       // nashiu zzaman  developed this project
       // update main tasks state and save to localstorage
       dispatch(setTasks(tempTasks));
       modifyLocalStorage(tempTasks);
     },
-    [dispatch, modifyLocalStorage]
+    [dispatch, modifyLocalStorage, showToast]
   );
 
   // mark as complete/incomplete
@@ -90,12 +97,16 @@ const useModifyTasksData = () => {
       // replace prev data with new data
       const tempTasks = [...curTasks];
       tempTasks.splice(indexOfTaskToMark, 1, editedTask);
+      showToast(
+        `Task marked as ${completedStatus ? "complete" : "incomplete"}`,
+        "success"
+      );
 
       // update main tasks state and save to localstorage
       dispatch(setTasks(tempTasks));
       modifyLocalStorage(tempTasks);
     },
-    [dispatch, modifyLocalStorage]
+    [dispatch, modifyLocalStorage, showToast]
   );
 
   return { addTask, removeTask, collectData, editTask, markTask };
