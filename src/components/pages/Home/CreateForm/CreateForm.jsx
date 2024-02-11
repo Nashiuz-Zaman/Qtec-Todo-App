@@ -35,21 +35,22 @@ const priorityOptions = [
 
 const CreateForm = ({ theme = "light", modifyClasses = "" }) => {
   const { createFormOpen } = useSelector(store => store.forms);
+  const { tasks } = useSelector(store => store.tasks);
   const { closeCreateForm } = useForms();
-  const { addTask } = useModifyTasksData();
+  const { addTask, collectData } = useModifyTasksData();
 
   const handleSubmit = e => {
     e.preventDefault();
     const form = e.target;
-
-    const newTask = {
-      id: new Date().toISOString(),
-      title: form.title.value,
-    };
+    const newTodo = collectData(tasks, form);
+    addTask(tasks, newTodo);
+    form.reset();
+    closeCreateForm();
   };
 
   return (
     <form
+      onSubmit={handleSubmit}
       className={`p-customXsm fixed w-[85%] xsm:w-[25rem] md:w-[30rem] lg:w-[35rem] shadow-large z-30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-defaultLg ${
         createFormOpen ? "block" : "hidden"
       } ${theme === "light" ? "bg-white" : "bg-darkThemeBg"} ${modifyClasses}`}>
@@ -78,12 +79,18 @@ const CreateForm = ({ theme = "light", modifyClasses = "" }) => {
         {/* deadline */}
         <InputField
           theme={theme}
-          placeholder="Deadline (DD-MM-YY)"
+          placeholder="Deadline (DD-MMM-YYYY)"
           name="deadline"
+          maxLength={11}
         />
 
         {/* priority */}
-        <SelectField theme={theme} label="Priority" options={priorityOptions} />
+        <SelectField
+          theme={theme}
+          name="priority"
+          label="Priority"
+          options={priorityOptions}
+        />
       </div>
 
       {/* submit button */}
