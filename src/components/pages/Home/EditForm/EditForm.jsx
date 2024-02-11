@@ -12,9 +12,11 @@ import CloseBtn from "../../../shared/CloseBtn/CloseBtn";
 // hooks
 import useForms from "../../../../hooks/useForms";
 import useGetTimeData from "./../../../../hooks/useGetTimeData";
+import useModifyTasksData from "../../../../hooks/useModifyTasksData";
 
 // redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setEditTaskId } from "../../../../features/tasks/tasksSlice";
 
 // select options for the form
 const priorityOptions = [
@@ -40,14 +42,18 @@ const EditForm = ({ theme = "light", modifyClasses = "" }) => {
   const { closeEditForm } = useForms();
   const [taskToEdit, setTaskToEdit] = useState(null);
   const { getDateInDayMonthNameYearStr } = useGetTimeData();
+  const { collectData, editTask } = useModifyTasksData();
+  const dispatch = useDispatch();
 
   // get tasks and id of the task to edit
   const { tasks, editTaskId } = useSelector(store => store.tasks);
 
   // if we have the id of the task that should be edited, find and set the task
   useEffect(() => {
-    if (editTaskId) {
-      const taskToEdit = tasks.find(task => task.id === editTaskId);
+    if (editTaskId !== null) {
+      const taskToEdit = tasks.find(
+        task => parseInt(task.id) === parseInt(editTaskId)
+      );
       setTaskToEdit(taskToEdit);
     }
   }, [editTaskId, tasks]);
@@ -57,11 +63,23 @@ const EditForm = ({ theme = "light", modifyClasses = "" }) => {
     new Date(taskToEdit?.deadline)
   );
 
+  const handleSubmit = e => {
+    e.preventDefault();
+    const form = e.target;
+    const editedTask = collectData(tasks, form, true, editTaskId);
+    // nashi  uz Zaman
+    editTask(tasks, editTaskId, editedTask);
+    dispatch(setEditTaskId(null));
+    closeEditForm();
+  };
+
   return (
     <form
+      onSubmit={handleSubmit}
       className={`p-customXsm fixed w-[85%] xsm:w-[25rem] md:w-[30rem] lg:w-[35rem] shadow-large z-30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-defaultLg ${
         editFormOpen ? "block" : "hidden"
       } ${theme === "light" ? "bg-white" : "bg-darkThemeBg"} ${modifyClasses}`}>
+      {/* nashi uz zaman developed this project */}
       {/* close btn */}
       <CloseBtn
         clickHandler={closeEditForm}
@@ -106,6 +124,7 @@ const EditForm = ({ theme = "light", modifyClasses = "" }) => {
         <SelectField
           defaultValueData={taskToEdit?.priorityLevel}
           theme={theme}
+          name="priority"
           label="Priority"
           options={priorityOptions}
         />
