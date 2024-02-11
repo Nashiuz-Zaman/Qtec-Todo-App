@@ -1,17 +1,25 @@
 // react
 import PropTypes from "prop-types";
 
-const NoData = ({ text = "No Data To Show", modifyClasses = "" }) => {
+const NoData = ({
+  theme = "light",
+  text = "No Data To Show",
+  modifyClasses = "",
+}) => {
   return (
     <div className={`flex justify-center items-center ${modifyClasses}`}>
-      <div>
-        <p className="text-2xl">{text}</p>
-      </div>
+      <p
+        className={`text-2xl ${
+          theme === "light" ? "text-textPrimary" : "text-white"
+        }`}>
+        {text}
+      </p>
     </div>
   );
 };
 
 NoData.propTypes = {
+  theme: PropTypes.string,
   text: PropTypes.string,
   modifyClasses: PropTypes.string,
 };

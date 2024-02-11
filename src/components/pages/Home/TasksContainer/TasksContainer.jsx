@@ -22,7 +22,9 @@ const TasksContainer = () => {
     <div className="grid grid-cols-1 2md:grid-cols-[1.5fr_1fr] xl:grid-cols-2 gap-customXsm 2md:gap-0">
       <div className="space-y-6 order-2 2md:order-1">
         {/* if there is no data then show no data component */}
-        {tasksToDisplay?.length < 1 && <NoData text="No todos to show" />}
+        {tasksToDisplay?.length < 1 && (
+          <NoData theme={theme} text="No todos to show" />
+        )}
 
         {/* if there is data show data */}
         {tasksToDisplay?.length > 0 &&
