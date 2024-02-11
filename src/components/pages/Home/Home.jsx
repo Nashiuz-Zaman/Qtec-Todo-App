@@ -5,6 +5,7 @@ import TasksContainer from "./TasksContainer/TasksContainer";
 import CreateForm from "./CreateForm/CreateForm";
 import EditForm from "./EditForm/EditForm";
 import SelectField from "../../shared/SelectField/SelectField";
+import TaskCount from "../../shared/TaskCount/TaskCount";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
@@ -47,7 +48,7 @@ const Home = () => {
             <SectionHeading
               theme={theme}
               text="Your Tasks"
-              modifyClasses="!text-xl"
+              modifyClasses="text-xl xl:text-3xl"
             />
 
             <SelectField
@@ -63,6 +64,12 @@ const Home = () => {
               }}
             />
           </div>
+
+          {/* count */}
+          <TaskCount
+            theme={theme}
+            modifyclasses="mb-customXsm 2md:mb-customSm"
+          />
 
           {/* tasks */}
           <TasksContainer />
