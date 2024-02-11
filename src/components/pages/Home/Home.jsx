@@ -6,6 +6,7 @@ import CreateForm from "./CreateForm/CreateForm";
 
 // redux
 import { useSelector } from "react-redux";
+import EditForm from "./EditForm/EditForm";
 
 const Home = () => {
   const { theme } = useSelector(store => store.websiteTheme);
@@ -25,6 +26,7 @@ const Home = () => {
 
         <section>
           <CreateForm theme={theme} />
+          <EditForm theme={theme} />
         </section>
       </InnerContainer>
     </div>

@@ -23,7 +23,10 @@ const Footer = () => {
       <InnerContainer>
         <div className="flex flex-col md:flex-row gap-8 md:gap-0 items-center justify-between">
           {/* website logo */}
-          <BrandLogo imageSource={logoWhite} />
+          <BrandLogo
+            imageModifyClasses="h-[3rem] xl:h-[4rem]"
+            imageSource={logoWhite}
+          />
 
           {/* copyright part */}
           <small className="text-white 2xl:text-lg">

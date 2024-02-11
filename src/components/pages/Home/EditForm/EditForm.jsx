@@ -1,3 +1,5 @@
+// react
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 // component
@@ -9,7 +11,7 @@ import CloseBtn from "../../../shared/CloseBtn/CloseBtn";
 
 // hooks
 import useForms from "../../../../hooks/useForms";
-import useModifyTasksData from "../../../../hooks/useModifyTasksData";
+import useGetTimeData from "./../../../../hooks/useGetTimeData";
 
 // redux
 import { useSelector } from "react-redux";
@@ -33,30 +35,36 @@ const priorityOptions = [
   },
 ];
 
-const CreateForm = ({ theme = "light", modifyClasses = "" }) => {
-  const { createFormOpen } = useSelector(store => store.forms);
-  const { tasks } = useSelector(store => store.tasks);
-  const { closeCreateForm } = useForms();
-  const { addTask, collectData } = useModifyTasksData();
+const EditForm = ({ theme = "light", modifyClasses = "" }) => {
+  const { editFormOpen } = useSelector(store => store.forms);
+  const { closeEditForm } = useForms();
+  const [taskToEdit, setTaskToEdit] = useState(null);
+  const { getDateInDayMonthNameYearStr } = useGetTimeData();
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    const form = e.target;
-    const newTodo = collectData(tasks, form);
-    addTask(tasks, newTodo);
-    form.reset();
-    closeCreateForm();
-  };
+  // get tasks and id of the task to edit
+  const { tasks, editTaskId } = useSelector(store => store.tasks);
+
+  // if we have the id of the task that should be edited, find and set the task
+  useEffect(() => {
+    if (editTaskId) {
+      const taskToEdit = tasks.find(task => task.id === editTaskId);
+      setTaskToEdit(taskToEdit);
+    }
+  }, [editTaskId, tasks]);
+
+  // find the deadline string in e.g 23-feb-2024 format
+  const deadlineStr = getDateInDayMonthNameYearStr(
+    new Date(taskToEdit?.deadline)
+  );
 
   return (
     <form
-      onSubmit={handleSubmit}
       className={`p-customXsm fixed w-[85%] xsm:w-[25rem] md:w-[30rem] lg:w-[35rem] shadow-large z-30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-defaultLg ${
-        createFormOpen ? "block" : "hidden"
+        editFormOpen ? "block" : "hidden"
       } ${theme === "light" ? "bg-white" : "bg-darkThemeBg"} ${modifyClasses}`}>
       {/* close btn */}
       <CloseBtn
-        clickHandler={closeCreateForm}
+        clickHandler={closeEditForm}
         theme={theme}
         modifyClasses="my-0 mb-2 text-2xl"
       />
@@ -66,42 +74,52 @@ const CreateForm = ({ theme = "light", modifyClasses = "" }) => {
         className={`font-bold text-2xl mb-5 sm:mb-custom2xsm transition-all duration-default ${
           theme === "light" ? "text-textPrimary" : "text-white"
         }`}>
-        Add a Todo
+        Update Todo
       </h2>
 
       <div className="space-y-6 xl:space-y-8 mb-8 sm:mb-customXsm">
         {/* title */}
-        <InputField theme={theme} placeholder="Title" name="title" />
+        <InputField
+          defaultValueData={taskToEdit?.title}
+          theme={theme}
+          placeholder="Title"
+          name="title"
+        />
 
         {/* description */}
-        <TextareaField theme={theme} label="Description" name="description" />
+        <TextareaField
+          defaultValueData={taskToEdit?.description}
+          theme={theme}
+          label="Description"
+          name="description"
+        />
 
         {/* deadline */}
         <InputField
+          defaultValueData={deadlineStr}
           theme={theme}
-          placeholder="Deadline (DD-MMM-YYYY)"
+          placeholder="Deadline (DD-MM-YY)"
           name="deadline"
-          maxLength={11}
         />
 
         {/* priority */}
         <SelectField
+          defaultValueData={taskToEdit?.priorityLevel}
           theme={theme}
-          name="priority"
           label="Priority"
           options={priorityOptions}
         />
       </div>
 
       {/* submit button */}
-      <ButtonBtn text="Add Todo" modifyClasses="!w-full" />
+      <ButtonBtn text="Update Todo" modifyClasses="!w-full" />
     </form>
   );
 };
 
-CreateForm.propTypes = {
+EditForm.propTypes = {
   theme: PropTypes.string,
   modifyClasses: PropTypes.string,
 };
 
-export default CreateForm;
+export default EditForm;

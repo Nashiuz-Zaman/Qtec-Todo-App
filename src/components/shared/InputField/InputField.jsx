@@ -1,16 +1,26 @@
 // react
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const InputField = ({
   theme = "light",
   type = "text",
   placeholder = "Default placeholder",
   name = "",
+  defaultValueData,
+  maxLength = null,
   modifyClasses = "",
 }) => {
   const [focused, setFocused] = useState(false);
   const [value, setValue] = useState("");
+
+  // if default value present show that
+  useEffect(() => {
+    if (defaultValueData !== undefined && defaultValueData !== "") {
+      setValue(defaultValueData);
+      setFocused(true);
+    }
+  }, [defaultValueData]);
 
   return (
     <div
@@ -29,6 +39,8 @@ const InputField = ({
 
       {/* input field */}
       <input
+        required
+        maxLength={maxLength}
         onFocus={() => setFocused(true)}
         onBlur={() => {
           setFocused(value.length ? true : false);
@@ -46,10 +58,12 @@ const InputField = ({
 };
 
 InputField.propTypes = {
+  defaultValueData: PropTypes.any,
   theme: PropTypes.string,
   type: PropTypes.string,
   placeholder: PropTypes.string,
   name: PropTypes.string,
+  maxLength: PropTypes.number,
   modifyClasses: PropTypes.string,
 };
 

@@ -12,16 +12,6 @@ const useGetTimeData = () => {
     return { hours, partOfDay, minutes, seconds };
   }, []);
 
-  const getDate = useCallback(() => {
-    const dateObject = new Date();
-    const monthName = dateObject.toLocaleString("en-us", { month: "short" });
-    const dayOfTheMonth = parseInt(dateObject.getDate());
-    const month = parseInt(dateObject.getMonth() + 1);
-    const year = parseInt(dateObject.getFullYear());
-
-    return { dayOfTheMonth, month, year, monthName };
-  }, []);
-
   const getSpecificDate = useCallback(dateObj => {
     const monthName = dateObj.toLocaleString("en-us", { month: "short" });
     const dayOfTheMonth = parseInt(dateObj.getDate());
@@ -31,11 +21,19 @@ const useGetTimeData = () => {
     return { dayOfTheMonth, month, year, monthName };
   }, []);
 
+  const getDateInDayMonthNameYearStr = useCallback(dateObj => {
+    const monthName = dateObj.toLocaleString("en-us", { month: "short" });
+    const dayOfTheMonth = parseInt(dateObj.getDate());
+    const year = parseInt(dateObj.getFullYear());
+
+    return `${dayOfTheMonth}-${monthName}-${year}`;
+  }, []);
+
   const padTime = useCallback((data = 0) => {
     return data < 10 ? data.toString().padStart(2, "0") : data;
   }, []);
 
-  return { getTime, getDate, padTime, getSpecificDate };
+  return { getTime, padTime, getSpecificDate, getDateInDayMonthNameYearStr };
 };
 
 export default useGetTimeData;

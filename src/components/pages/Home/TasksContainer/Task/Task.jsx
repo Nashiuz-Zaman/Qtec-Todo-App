@@ -16,9 +16,19 @@ import Accordion from "./Accordion/Accordion";
 
 // hook
 import useGetTimeData from "./../../../../../hooks/useGetTimeData";
+import useForms from "../../../../../hooks/useForms";
+import useModifyTasksData from "../../../../../hooks/useModifyTasksData";
+
+// redux
+import { useDispatch, useSelector } from "react-redux";
+import { setEditTaskId } from "../../../../../features/tasks/tasksSlice";
 
 const Task = ({ theme = "light", taskData }) => {
-  const { getSpecificDate } = useGetTimeData();
+  const { getDateInDayMonthNameYearStr } = useGetTimeData();
+  const { tasks } = useSelector(store => store.tasks);
+  const { openEditForm } = useForms();
+  const dispatch = useDispatch();
+  const { removeTask, editTask } = useModifyTasksData();
 
   //  accordion state
   const [expanded, setExpanded] = useState(false);
@@ -28,9 +38,7 @@ const Task = ({ theme = "light", taskData }) => {
     taskData;
 
   // get the date details
-  const { dayOfTheMonth, year, monthName } = getSpecificDate(
-    new Date(deadline)
-  );
+  const deadlineStr = getDateInDayMonthNameYearStr(new Date(deadline));
 
   // priority data info
   const priorities = [
@@ -47,9 +55,6 @@ const Task = ({ theme = "light", taskData }) => {
       color: "bg-red-500",
     },
   ];
-
-  // create the deadline date string
-  const deadlineStr = `${dayOfTheMonth}-${monthName}-${year}`;
 
   // set priority color and text
   const priorityColor = priorities[priorityLevel - 1]?.color;
@@ -130,6 +135,12 @@ const Task = ({ theme = "light", taskData }) => {
 
             {/* edit button */}
             <button
+              onClick={e => {
+                e.preventDefault();
+                dispatch(setEditTaskId(id));
+                editTask(tasks, id);
+                openEditForm();
+              }}
               title="Edit Task"
               aria-label="Button for editing task"
               className={`bg-blue-500 ${iconBtnClasses}`}>
@@ -139,6 +150,10 @@ const Task = ({ theme = "light", taskData }) => {
             {/* delete button */}
             <button
               title="Delete Task"
+              onClick={e => {
+                e.preventDefault();
+                removeTask(tasks, id);
+              }}
               aria-label="Button for deleting task"
               className={`bg-red-600 ${iconBtnClasses}`}>
               <IoTrashSharp className={iconClasses} />
