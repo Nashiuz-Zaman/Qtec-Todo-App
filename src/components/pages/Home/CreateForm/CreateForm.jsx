@@ -51,7 +51,7 @@ const CreateForm = ({ theme = "light", modifyClasses = "" }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className={`p-customXsm fixed w-[85%] xsm:w-[25rem] md:w-[30rem] lg:w-[35rem] shadow-large z-30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-defaultLg ${
+      className={`p-custom2xsm sm:p-customXsm fixed w-[85%] xsm:w-[25rem] md:w-[30rem] lg:w-[35rem] shadow-large z-30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-defaultLg ${
         createFormOpen ? "block" : "hidden"
       } ${theme === "light" ? "bg-white" : "bg-darkThemeBg"} ${modifyClasses}`}>
       {/* close btn */}
@@ -60,7 +60,7 @@ const CreateForm = ({ theme = "light", modifyClasses = "" }) => {
         theme={theme}
         modifyClasses="my-0 mb-2 text-2xl"
       />
-
+      {/* nashiuz zaman coded this project */}
       {/* form heading */}
       <h2
         className={`font-bold text-2xl mb-5 sm:mb-custom2xsm transition-all duration-default ${

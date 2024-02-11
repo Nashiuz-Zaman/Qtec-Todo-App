@@ -28,7 +28,7 @@ const Task = ({ theme = "light", taskData }) => {
   const { tasks } = useSelector(store => store.tasks);
   const { openEditForm } = useForms();
   const dispatch = useDispatch();
-  const { removeTask, editTask } = useModifyTasksData();
+  const { removeTask, markTask } = useModifyTasksData();
 
   //  accordion state
   const [expanded, setExpanded] = useState(false);
@@ -115,6 +115,9 @@ const Task = ({ theme = "light", taskData }) => {
               <>
                 {/* not completed button */}
                 <button
+                  onClick={() => {
+                    markTask(tasks, id, false);
+                  }}
                   title="Mark as Incomplete"
                   aria-label="Button for marking task as incompleted"
                   className={`bg-yellow-400 ${iconBtnClasses}`}>
@@ -125,6 +128,9 @@ const Task = ({ theme = "light", taskData }) => {
               <>
                 {/* complete button */}
                 <button
+                  onClick={() => {
+                    markTask(tasks, id, true);
+                  }}
                   title="Mark as Completed"
                   aria-label="Button for marking task as completed"
                   className={`bg-green-600 ${iconBtnClasses}`}>
@@ -138,7 +144,6 @@ const Task = ({ theme = "light", taskData }) => {
               onClick={e => {
                 e.preventDefault();
                 dispatch(setEditTaskId(id));
-                editTask(tasks, id);
                 openEditForm();
               }}
               title="Edit Task"

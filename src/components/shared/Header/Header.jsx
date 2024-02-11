@@ -24,7 +24,7 @@ const Header = ({ modifyClasses = "" }) => {
           {/* website logo */}
           <BrandLogo
             imageSource={theme === "light" ? logoPrimary : logoWhite}
-            imageModifyClasses="xl:h-[4rem] 2xl:h-[5rem]"
+            imageModifyClasses="h-[3rem] xl:h-[4rem] 2xl:h-[5rem]"
           />
 
           <ThemeBtn />
