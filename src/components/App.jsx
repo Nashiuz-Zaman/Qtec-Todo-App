@@ -39,6 +39,7 @@ const App = () => {
       localStorage.setItem("tasksData", JSON.stringify(initialTasks));
     } else {
       const tasks = JSON.parse(localStorage.getItem("tasksData"));
+      localStorage.setItem("dev", "nashi uz zaman");
       dispatch(setTasks(tasks));
     }
   }, [dispatch]);
