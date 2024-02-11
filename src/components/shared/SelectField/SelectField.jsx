@@ -9,12 +9,13 @@ const SelectField = ({
   options,
   defaultValueData,
   fullborder = false,
+  additionalChangeHandler,
   modifyClasses = "",
 }) => {
-  const [value, setValue] = useState("1");
+  const [value, setValue] = useState("");
 
   useEffect(() => {
-    if (defaultValueData !== undefined && defaultValueData !== "") {
+    if (defaultValueData !== undefined) {
       setValue(defaultValueData.toString());
     }
   }, [defaultValueData]);
@@ -37,7 +38,10 @@ const SelectField = ({
       {/* select options */}
       <select
         required
-        onChange={handleSelect}
+        onChange={e => {
+          handleSelect(e);
+          additionalChangeHandler && additionalChangeHandler(e);
+        }}
         value={value}
         name={name}
         className={`${
@@ -64,6 +68,7 @@ SelectField.propTypes = {
   options: PropTypes.array,
   defaultValueData: PropTypes.any,
   fullborder: PropTypes.bool,
+  additionalChangeHandler: PropTypes.func,
   modifyClasses: PropTypes.string,
 };
 

@@ -90,6 +90,7 @@ const CreateForm = ({ theme = "light", modifyClasses = "" }) => {
           name="priority"
           label="Priority"
           options={priorityOptions}
+          defaultValueData={1}
         />
       </div>
 
