@@ -11,6 +11,7 @@ import CloseBtn from "../../../shared/CloseBtn/CloseBtn";
 
 // hooks
 import useForms from "../../../../hooks/useForms";
+import useGetTimeData from "./../../../../hooks/useGetTimeData";
 
 // redux
 import { useSelector } from "react-redux";
@@ -35,17 +36,13 @@ const priorityOptions = [
 ];
 
 const EditForm = ({ theme = "light", modifyClasses = "" }) => {
-  // open/close state
   const { editFormOpen } = useSelector(store => store.forms);
-
-  // close form function
   const { closeEditForm } = useForms();
+  const [taskToEdit, setTaskToEdit] = useState(null);
+  const { getDateInDayMonthNameYearStr } = useGetTimeData();
 
   // get tasks and id of the task to edit
   const { tasks, editTaskId } = useSelector(store => store.tasks);
-
-  // keep the task in a state
-  const [taskToEdit, setTaskToEdit] = useState(null);
 
   // if we have the id of the task that should be edited, find and set the task
   useEffect(() => {
@@ -54,6 +51,11 @@ const EditForm = ({ theme = "light", modifyClasses = "" }) => {
       setTaskToEdit(taskToEdit);
     }
   }, [editTaskId, tasks]);
+
+  // find the deadline string in e.g 23-feb-2024 format
+  const deadlineStr = getDateInDayMonthNameYearStr(
+    new Date(taskToEdit?.deadline)
+  );
 
   return (
     <form
@@ -85,17 +87,28 @@ const EditForm = ({ theme = "light", modifyClasses = "" }) => {
         />
 
         {/* description */}
-        <TextareaField theme={theme} label="Description" name="description" />
+        <TextareaField
+          defaultValueData={taskToEdit?.description}
+          theme={theme}
+          label="Description"
+          name="description"
+        />
 
         {/* deadline */}
         <InputField
+          defaultValueData={deadlineStr}
           theme={theme}
           placeholder="Deadline (DD-MM-YY)"
           name="deadline"
         />
 
         {/* priority */}
-        <SelectField theme={theme} label="Priority" options={priorityOptions} />
+        <SelectField
+          defaultValueData={taskToEdit?.priorityLevel}
+          theme={theme}
+          label="Priority"
+          options={priorityOptions}
+        />
       </div>
 
       {/* submit button */}
