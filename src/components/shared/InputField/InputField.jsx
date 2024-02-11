@@ -1,16 +1,24 @@
 // react
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const InputField = ({
   theme = "light",
   type = "text",
   placeholder = "Default placeholder",
   name = "",
+  defaultValueData,
   modifyClasses = "",
 }) => {
   const [focused, setFocused] = useState(false);
   const [value, setValue] = useState("");
+
+  useEffect(() => {
+    if (defaultValueData !== undefined && defaultValueData !== "") {
+      setValue(defaultValueData);
+      setFocused(true);
+    }
+  }, [defaultValueData]);
 
   return (
     <div
@@ -46,6 +54,7 @@ const InputField = ({
 };
 
 InputField.propTypes = {
+  defaultValueData: PropTypes.string,
   theme: PropTypes.string,
   type: PropTypes.string,
   placeholder: PropTypes.string,
