@@ -18,6 +18,7 @@ import { Slide } from "react-toastify";
 // redux
 import { useSelector, useDispatch } from "react-redux";
 import { setTasks, setFilter } from "../features/tasks/tasksSlice";
+import { setTheme } from "../features/websiteTheme/websiteThemeSlice";
 
 // tasks dummy data
 import { initialTasks } from "./../data/tasksData";
@@ -51,6 +52,16 @@ const App = () => {
       const filter = parseInt(localStorage.getItem("filter"));
       localStorage.setItem("dev", "nashi uz zaman");
       dispatch(setFilter(filter));
+    }
+  }, [dispatch]);
+
+  // set initial theme at the start
+  useEffect(() => {
+    if (!localStorage.getItem("websiteTheme")) {
+      localStorage.setItem("websiteTheme", "light");
+    } else {
+      const theme = localStorage.getItem("websiteTheme");
+      dispatch(setTheme(theme));
     }
   }, [dispatch]);
 
