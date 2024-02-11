@@ -3,11 +3,12 @@ import SectionHeading from "../../shared/SectionHeading/SectionHeading";
 import InnerContainer from "./../../containers/InnerContainer/InnerContainer";
 import TasksContainer from "./TasksContainer/TasksContainer";
 import CreateForm from "./CreateForm/CreateForm";
-
-// redux
-import { useSelector } from "react-redux";
 import EditForm from "./EditForm/EditForm";
 import SelectField from "../../shared/SelectField/SelectField";
+
+// redux
+import { useSelector, useDispatch } from "react-redux";
+import { setFilter } from "../../../features/tasks/tasksSlice";
 
 const filterOptions = [
   {
@@ -34,6 +35,9 @@ const filterOptions = [
 
 const Home = () => {
   const { theme } = useSelector(store => store.websiteTheme);
+  const { filter } = useSelector(store => store.tasks);
+  const dispatch = useDispatch();
+
   return (
     <div className="py-customMd">
       <InnerContainer>
@@ -49,7 +53,14 @@ const Home = () => {
             <SelectField
               label="Show Tasks"
               options={filterOptions}
+              theme={theme}
               fullborder={true}
+              defaultValueData={filter}
+              additionalChangeHandler={e => {
+                dispatch(setFilter(parseInt(e.target.value)));
+                localStorage.removeItem("filter");
+                localStorage.setItem("filter", parseInt(e.target.value));
+              }}
             />
           </div>
 

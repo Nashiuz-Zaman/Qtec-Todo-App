@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   tasks: [],
   editTaskId: null,
+  filter: 0,
 };
 
 const tasksSlice = createSlice({
@@ -15,9 +16,12 @@ const tasksSlice = createSlice({
     setEditTaskId: (state, { payload }) => {
       state.editTaskId = payload;
     },
+    setFilter: (state, { payload }) => {
+      state.filter = payload;
+    },
   },
 });
 
 const { reducer, actions } = tasksSlice;
-export const { setTasks, setEditTaskId } = actions;
+export const { setTasks, setEditTaskId, setFilter } = actions;
 export default reducer;
