@@ -101,11 +101,12 @@ const Task = ({ theme = "light", taskData }) => {
           </div>
         </div>
 
+        {/* status */}
         <div className="justify-self-center sm:justify-self-end flex flex-col space-y-2 sm:space-y-3">
           <p>
             <span className={infoHeadingClasses}>Status: </span>
             <span className={infoTextClasses}>
-              {completed ? "Completed" : "Incomplete"}
+              {completed ? "Completed" : "Not Completed"}
             </span>
           </p>
 
